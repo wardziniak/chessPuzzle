@@ -11,28 +11,39 @@ object Algorithm {
     //chessmanList.permutations.collect()
   }
 
-  def singlePermutationSolution(freeFields: List[Field], chessmen: List[UnsetChessman]): Int = {
+  def singlePermutationSolution(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): Int = {
     chessmen match {
       case Nil => {
         //println(s"Nil ${freeFields.size}")
         0
       }
-      case current :: Nil =>
+      case currentPiece :: Nil =>
         //println(s"h :: Nil ${freeFields.size}")
-        freeFields.size
+        freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).size
+        //freeFields.size
       case (h :: t) => {
         val currentPiece = h
         val restPieces = t
-        //println(s"More $currentPiece")
-        freeFields.collect { case p =>
-          //val unAttacked = freeFields.fil
-          val toCheck = freeFields.filter(q => q.isAfter(p) && !currentPiece.setOnField(p).beats(q))
-          //println(p)
-          //println(toCheck)
+        freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).collect { case p =>
+          val setChessmen = currentPiece.setOnField(p)
+          val toCheck = freeFields.filter(q => q.isAfter(p) && !setChessmen.beats(q))
+
           if (toCheck.nonEmpty)
-            singlePermutationSolution(toCheck, t)
+            singlePermutationSolution(toCheck, t, setChessmen :: alreadySetChessmen)
           else 0
         }.sum
+
+
+//        freeFields.collect { case p =>
+//          //val unAttacked = freeFields.fil
+//          val setChessmen = currentPiece.setOnField(p)
+//          val toCheck = freeFields.filter(q => q.isAfter(p) && !setChessmen.beats(q))
+//          //println(p)
+//          //println(toCheck)
+//          if (toCheck.nonEmpty)
+//            singlePermutationSolution(toCheck, t, setChessmen :: alreadySetChessmen)
+//          else 0
+//        }.sum
       }
     }
   }

@@ -4,6 +4,10 @@
 
 case class Chessman (field: Field, checkingFun: (Field, Field) => Boolean) {
   def beats(other: Field) = checkingFun(field, other)
+  def beatsChessmen(chessmen: List[Chessman]) = chessmen.find(p => this.beats(p.field)) match {
+    case None => false
+    case _ => true
+  }
 }
 
 object Chessman {
@@ -11,7 +15,8 @@ object Chessman {
     'Q' -> new UnsetQueen,
     'K' -> new UnsetKing,
     'B' -> new UnsetBishop,
-    'R' -> new UnsetRook
+    'R' -> new UnsetRook,
+    'S' -> new UnsetKnight
   )
 
   def apply(sign: Char) = chess.get(sign.toUpper)
@@ -55,6 +60,11 @@ case class Field(x: Int, y: Int) {
   def isAfter(field: Field) = {
     if (x > field.x) true
     else x == field.x && y > field.y
+  }
+
+  def isBeatenByOneOfChessmen(chessmen: List[Chessman]) = chessmen.find(p => p.beats(this)) match {
+    case None => false
+    case Some(_) => true
   }
 }
 
