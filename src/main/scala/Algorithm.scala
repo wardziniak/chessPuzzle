@@ -14,25 +14,25 @@ object Algorithm {
   def singlePermutationSolution(freeFields: List[Field], chessmen: List[UnsetChessman]): Int = {
     chessmen match {
       case Nil => {
-        println(s"Nil ${freeFields.size}")
+        //println(s"Nil ${freeFields.size}")
         0
       }
+      case current :: Nil =>
+        //println(s"h :: Nil ${freeFields.size}")
+        freeFields.size
       case (h :: t) => {
         val currentPiece = h
         val restPieces = t
-        println(s"More $currentPiece")
-        if (t == Nil) {
-          println( freeFields.size)
-          freeFields.size
-        }
-        else
-          freeFields.collect { case p =>
-            //val unAttacked = freeFields.fil
-            val toCheck = freeFields.filter(q => q.isAfter(p) && !currentPiece.setOnField(p).beats(q))
-            if (toCheck.nonEmpty)
-              singlePermutationSolution(toCheck, restPieces)
-            else 0
-          }.sum
+        //println(s"More $currentPiece")
+        freeFields.collect { case p =>
+          //val unAttacked = freeFields.fil
+          val toCheck = freeFields.filter(q => q.isAfter(p) && !currentPiece.setOnField(p).beats(q))
+          //println(p)
+          //println(toCheck)
+          if (toCheck.nonEmpty)
+            singlePermutationSolution(toCheck, t)
+          else 0
+        }.sum
       }
     }
   }

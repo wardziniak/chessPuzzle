@@ -54,7 +54,7 @@ case class Field(x: Int, y: Int) {
   def kingBeats(other: Field) = Math.abs(x - other.x) <= 1 && Math.abs(y - other.y) <= 1
   def isAfter(field: Field) = {
     if (x > field.x) true
-    else y > field.y
+    else x == field.x && y > field.y
   }
 }
 
