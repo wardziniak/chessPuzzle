@@ -29,6 +29,12 @@ object PuzzleApp {
     val futureOfList = Future.sequence(listOfFutures)
     val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
+//    val listOfFutures = chessmen.permutations.collect{ case p =>
+//      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
+//    }
+//    val futureOfList = Future.sequence(listOfFutures)
+//    Await.result(futureOfList, 30000.milliseconds)
+
     println(s"Number of solutions: $sum1")
     println(s"Execution time: ${System.currentTimeMillis - s}")
 

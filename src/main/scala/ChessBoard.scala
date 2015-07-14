@@ -1,5 +1,6 @@
 /**
- * Created by bartek on 7/13/15.
+ * Created by wardziniak on 7/13/15.
+ * File with Chessmen definition
  */
 
 object ChessBoard {

@@ -28,7 +28,7 @@ trait UnsetChessman {
 }
 
 class UnsetQueen extends UnsetChessman {
-  override def checkingFunction: (Field, Field) => Boolean = (field1, field2) => field1.sameDiagonals(field2) || field1.sameOrthogonal(field2)
+  override def checkingFunction: (Field, Field) => Boolean = (field1, field2) => field1.isQueueBeats(field2)
     //field1.isQueueBeats(field2)
     //field1.sameDiagonals(field2) || field1.sameOrthogonal(field2)
 }
