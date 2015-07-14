@@ -51,17 +51,28 @@ object Algorithm {
   }
 
 
-  def returnAllSolutionsForFirstChessman(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): List[List[Chessman]] = freeFields match {
-    case Nil => Nil
+  @tailrec
+  def returnAllSolutionsForFirstChessman(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman], result: List[List[Chessman]]): List[List[Chessman]] = freeFields match {
+    case Nil => result
     case h :: t =>
-      val tmpVal = returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen)
       val setChessman = chessmen.head.setOnField(h)
+      var tmpVal1 = 0
       if (!setChessman.beatsChessmen(alreadySetChessmen)) {
         val toCheck = t.filter(q => !setChessman.beats(q))
-        if (toCheck.nonEmpty) tmpVal ++ returnSolutionsForSinglePermutation(toCheck, chessmen.tail, setChessman :: alreadySetChessmen)
-        else tmpVal
+        if (toCheck.nonEmpty) returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result ++ returnSolutionsForSinglePermutation(toCheck, chessmen.tail, setChessman :: alreadySetChessmen))
+        else
+          returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result)
       }
-      else tmpVal
+      else
+        returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result)
+//      val tmpVal = returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen)
+//      val setChessman = chessmen.head.setOnField(h)
+//      if (!setChessman.beatsChessmen(alreadySetChessmen)) {
+//        val toCheck = t.filter(q => !setChessman.beats(q))
+//        if (toCheck.nonEmpty) tmpVal ++ returnSolutionsForSinglePermutation(toCheck, chessmen.tail, setChessman :: alreadySetChessmen)
+//        else tmpVal
+//      }
+//      else tmpVal
   }
 
   def returnSolutionsForSinglePermutation(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): List[List[Chessman]] = {
@@ -82,7 +93,7 @@ object Algorithm {
         //          else 0
         //        }.sum
 
-        returnAllSolutionsForFirstChessman(freeFields, chessmen, alreadySetChessmen)
+        returnAllSolutionsForFirstChessman(freeFields, chessmen, alreadySetChessmen, Nil)
     }
   }
 

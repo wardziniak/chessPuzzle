@@ -33,7 +33,7 @@ object PuzzleApp {
 //      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
 //    }
 //    val futureOfList = Future.sequence(listOfFutures)
-//    Await.result(futureOfList, 30000.milliseconds)
+//    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
     println(s"Number of solutions: $sum1")
     println(s"Execution time: ${System.currentTimeMillis - s}")
