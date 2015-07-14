@@ -5,6 +5,7 @@ import scala.concurrent.duration._
 
 /**
  * Created by bartek on 7/13/15.
+ * Main class
  */
 object PuzzleApp {
 
@@ -31,17 +32,17 @@ object PuzzleApp {
 //    val futureOfList = Future.sequence(listOfFutures)
 //    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
-    val listOfFutures = chessmen.permutations.collect{ case p =>
-      Future {Algorithm.numberOfSinglePermutationSolution1(chessBoard, p.flatten, List())}
-    }
-    val futureOfList = Future.sequence(listOfFutures)
-    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
-
 //    val listOfFutures = chessmen.permutations.collect{ case p =>
-//      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
+//      Future {Algorithm.numberOfSinglePermutationSolution1(chessBoard, p.flatten, List())}
 //    }
 //    val futureOfList = Future.sequence(listOfFutures)
 //    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
+
+    val listOfFutures = chessmen.permutations.collect{ case p =>
+      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
+    }
+    val futureOfList = Future.sequence(listOfFutures)
+    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
     println(s"Number of solutions: $sum1")
     println(s"Execution time: ${System.currentTimeMillis - s}")

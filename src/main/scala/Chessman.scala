@@ -1,5 +1,6 @@
 /**
  * Created by bartek on 7/13/15.
+ * File with Chessmen definition
  */
 
 case class Chessman (field: Field, checkingFun: (Field, Field) => Boolean) {
@@ -29,8 +30,6 @@ trait UnsetChessman {
 
 class UnsetQueen extends UnsetChessman {
   override def checkingFunction: (Field, Field) => Boolean = (field1, field2) => field1.sameDiagonals(field2) || field1.sameOrthogonal(field2)
-    //field1.isQueueBeats(field2)
-    //field1.sameDiagonals(field2) || field1.sameOrthogonal(field2)
 }
 
 class UnsetBishop extends UnsetChessman {

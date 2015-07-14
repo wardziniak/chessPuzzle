@@ -1,6 +1,6 @@
 /**
  * Created by wardziniak on 7/13/15.
- * File with Chessmen definition
+ * File with Chessboard definition
  */
 
 object ChessBoard {
