@@ -2,6 +2,7 @@ import scala.annotation.tailrec
 
 /**
  * Created by bartek on 7/13/15.
+ * Algorithm implementation
  */
 object Algorithm {
 
