@@ -19,22 +19,29 @@ object PuzzleApp {
     //val chessmens = List(rook, rook, knigh, knigh, knigh, knigh)
     //val chessmens = List(rook, rook, rook)
     val chessmen = List(king, king, queen, queen, bishop, bishop, knight)
+    //val chessmen = List(queen)
 
     val chessBoard = ChessBoard.createChessBoard(7)
 
     val s = System.currentTimeMillis
 
+    val listOfFutures = chessmen.permutations.collect{ case p =>
+        Future {Algorithm.numberOfSinglePermutationSolution(chessBoard, p.flatten, List())}
+    }
+    val futureOfList = Future.sequence(listOfFutures)
+    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
+
 //    val listOfFutures = chessmen.permutations.collect{ case p =>
-//        Future {Algorithm.numberOfSinglePermutationSolution(chessBoard, p.flatten, List())}
+//      Future {Algorithm.numberOfSinglePermutationSolution1(chessBoard, p.flatten, List(), 0)}
 //    }
 //    val futureOfList = Future.sequence(listOfFutures)
 //    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
-    val listOfFutures = chessmen.permutations.collect{ case p =>
-      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
-    }
-    val futureOfList = Future.sequence(listOfFutures)
-    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
+//    val listOfFutures = chessmen.permutations.collect{ case p =>
+//      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
+//    }
+//    val futureOfList = Future.sequence(listOfFutures)
+//    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
     println(s"Number of solutions: $sum1")
     println(s"Execution time: ${System.currentTimeMillis - s}")
