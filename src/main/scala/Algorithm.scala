@@ -3,18 +3,10 @@
  */
 object Algorithm {
 
-  def solution(size: Int, chessmen: List[UnsetChessman]) {
-
-  }
-
-  def countSolution(size: Int, chessmanList: List[Chessman]) = {
-    //chessmanList.permutations.collect()
-  }
-
-  def fun(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): Int = freeFields match {
+  def checkAllSolutionsForFirstChessman(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): Int = freeFields match {
     case Nil => 0
     case h :: t => {
-      val tmpVal = fun(t, chessmen, alreadySetChessmen)
+      val tmpVal = checkAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen)
       val setChessman = chessmen.head.setOnField(h)
       if (!setChessman.beatsChessmen(alreadySetChessmen)) {
         val toCheck = t.filter(q => !setChessman.beats(q))
@@ -27,15 +19,12 @@ object Algorithm {
 
   def singlePermutationSolution(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): Int = {
     chessmen match {
-      case Nil => {
-        //println(s"Nil ${freeFields.size}")
-        0
-      }
+      case Nil => 0
       case currentPiece :: Nil =>
         //println(s"h :: Nil ${freeFields.size}")
         freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).size
-        //freeFields.size
-      case (currentPiece :: restOfPieces) => {
+        //freeFields.filterNot(p => p.beatsChessmen(currentPiece.checkingFunction, alreadySetChessmen)).size
+      case (_) => {
 //        freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).collect { case p =>
 //          val setChessmen = currentPiece.setOnField(p)
 //          val toCheck = freeFields.filter(q => q.isAfter(p) && !setChessmen.beats(q))
@@ -45,7 +34,7 @@ object Algorithm {
 //          else 0
 //        }.sum
 
-        fun(freeFields, chessmen, alreadySetChessmen)
+        checkAllSolutionsForFirstChessman(freeFields, chessmen, alreadySetChessmen)
 
 //        freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).collect { case p =>
 //          val setChessmen = currentPiece.setOnField(p)
