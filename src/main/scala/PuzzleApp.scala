@@ -14,7 +14,7 @@ object PuzzleApp {
     val king = Chessman('k')
     val rook = Chessman('r')
     val knigh = Chessman('s')
-    //val chessmens = List(queen, queen, queen, queen, queen, queen, queen,queen)
+    //val chessmen = List(queen, queen, queen, queen, queen, queen, queen,queen)
     //val chessmens = List(king, king, rook)
     //val chessmens = List(rook, rook, knigh, knigh, knigh, knigh)
     //val chessmens = List(rook, rook, rook)
@@ -44,7 +44,7 @@ object PuzzleApp {
     val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
     //println(s"Number of solutions: ${sumOfResult}")
-    println(s"Number of solutions: ${sum1}")
+    println(s"Number of solutions: $sum1")
     println(s"Execution time: ${System.currentTimeMillis - s}")
 
 
