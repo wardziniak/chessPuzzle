@@ -6,47 +6,29 @@ import scala.annotation.tailrec
 object Algorithm {
 
   @tailrec
-  def checkAllSolutionsForFirstChessman(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman], result: Int): Int = freeFields match {
+  def numberOfAllSolutionsForFirstChessman(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman], result: Int): Int = freeFields match {
     case Nil => result
     case h :: t =>
       //val tmpVal = checkAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen)
       val setChessman = chessmen.head.setOnField(h)
-      var tmpVal1 = 0
       if (!setChessman.beatsChessmen(alreadySetChessmen)) {
         val toCheck = t.filter(q => !setChessman.beats(q))
-        if (toCheck.nonEmpty) checkAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result +singlePermutationSolution(toCheck, chessmen.tail, setChessman :: alreadySetChessmen))
+        if (toCheck.nonEmpty) numberOfAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result +numberOfSinglePermutationSolution(toCheck, chessmen.tail, setChessman :: alreadySetChessmen))
         else
-          checkAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result)
+          numberOfAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result)
       }
       else
-        checkAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result)
-//      val tmpVal = checkAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen)
-//      val setChessman = chessmen.head.setOnField(h)
-//      if (!setChessman.beatsChessmen(alreadySetChessmen)) {
-//        val toCheck = t.filter(q => !setChessman.beats(q))
-//        if (toCheck.nonEmpty) tmpVal + singlePermutationSolution(toCheck, chessmen.tail, setChessman :: alreadySetChessmen)
-//        else tmpVal
-//      }
-//      else tmpVal
+        numberOfAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result)
   }
 
-  def singlePermutationSolution(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): Int = {
+  def numberOfSinglePermutationSolution(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): Int = {
     chessmen match {
       case Nil => 0
       case currentPiece :: Nil =>
         freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).size
         //freeFields.filterNot(p => p.beatsChessmen(currentPiece.checkingFunction, alreadySetChessmen)).size
       case (_) =>
-//        freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).collect { case p =>
-//          val setChessmen = currentPiece.setOnField(p)
-//          val toCheck = freeFields.filter(q => q.isAfter(p) && !setChessmen.beats(q))
-//
-//          if (toCheck.nonEmpty)
-//            singlePermutationSolution(toCheck, restOfPieces, setChessmen :: alreadySetChessmen)
-//          else 0
-//        }.sum
-
-        checkAllSolutionsForFirstChessman(freeFields, chessmen, alreadySetChessmen, 0)
+        numberOfAllSolutionsForFirstChessman(freeFields, chessmen, alreadySetChessmen, 0)
     }
   }
 
@@ -56,7 +38,6 @@ object Algorithm {
     case Nil => result
     case h :: t =>
       val setChessman = chessmen.head.setOnField(h)
-      var tmpVal1 = 0
       if (!setChessman.beatsChessmen(alreadySetChessmen)) {
         val toCheck = t.filter(q => !setChessman.beats(q))
         if (toCheck.nonEmpty) returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result ++ returnSolutionsForSinglePermutation(toCheck, chessmen.tail, setChessman :: alreadySetChessmen))
@@ -65,14 +46,6 @@ object Algorithm {
       }
       else
         returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen, result)
-//      val tmpVal = returnAllSolutionsForFirstChessman(t, chessmen, alreadySetChessmen)
-//      val setChessman = chessmen.head.setOnField(h)
-//      if (!setChessman.beatsChessmen(alreadySetChessmen)) {
-//        val toCheck = t.filter(q => !setChessman.beats(q))
-//        if (toCheck.nonEmpty) tmpVal ++ returnSolutionsForSinglePermutation(toCheck, chessmen.tail, setChessman :: alreadySetChessmen)
-//        else tmpVal
-//      }
-//      else tmpVal
   }
 
   def returnSolutionsForSinglePermutation(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): List[List[Chessman]] = {
@@ -84,17 +57,7 @@ object Algorithm {
         }
       //freeFields.filterNot(p => p.beatsChessmen(currentPiece.checkingFunction, alreadySetChessmen)).size
       case (_) =>
-        //        freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).collect { case p =>
-        //          val setChessmen = currentPiece.setOnField(p)
-        //          val toCheck = freeFields.filter(q => q.isAfter(p) && !setChessmen.beats(q))
-        //
-        //          if (toCheck.nonEmpty)
-        //            singlePermutationSolution(toCheck, restOfPieces, setChessmen :: alreadySetChessmen)
-        //          else 0
-        //        }.sum
-
         returnAllSolutionsForFirstChessman(freeFields, chessmen, alreadySetChessmen, Nil)
     }
   }
-
 }
