@@ -25,17 +25,17 @@ object PuzzleApp {
 
     val s = System.currentTimeMillis
 
-    val listOfFutures = chessmen.permutations.collect{ case p =>
-        Future {Algorithm.numberOfSinglePermutationSolution(chessBoard, p.flatten, List())}
-    }
-    val futureOfList = Future.sequence(listOfFutures)
-    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
-
 //    val listOfFutures = chessmen.permutations.collect{ case p =>
-//      Future {Algorithm.numberOfSinglePermutationSolution1(chessBoard, p.flatten, List(), 0)}
+//        Future {Algorithm.numberOfSinglePermutationSolution(chessBoard, p.flatten, List())}
 //    }
 //    val futureOfList = Future.sequence(listOfFutures)
 //    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
+
+    val listOfFutures = chessmen.permutations.collect{ case p =>
+      Future {Algorithm.numberOfSinglePermutationSolution1(chessBoard, p.flatten, List())}
+    }
+    val futureOfList = Future.sequence(listOfFutures)
+    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
 //    val listOfFutures = chessmen.permutations.collect{ case p =>
 //      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}

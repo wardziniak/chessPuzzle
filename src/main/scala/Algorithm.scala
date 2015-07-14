@@ -6,22 +6,22 @@ import scala.annotation.tailrec
  */
 object Algorithm {
 
-  def numberOfSinglePermutationSolution1(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman], result: Int): Int = {
+  def numberOfSinglePermutationSolution1(freeFields: List[Field], chessmen: List[UnsetChessman], alreadySetChessmen: List[Chessman]): Int = {
     (freeFields, chessmen) match {
       case (_, Nil) => 0
       case (h :: t, currentPiece :: Nil) => freeFields.filterNot(p => currentPiece.setOnField(p).beatsChessmen(alreadySetChessmen)).size
-      case (Nil, _) => result
+      case (Nil, _) => 0
       case (_, _) =>
         val setChessman = chessmen.head.setOnField(freeFields.head)
         if (!setChessman.beatsChessmen(alreadySetChessmen)) {
           val toCheck = freeFields.tail.filter(q => !setChessman.beats(q))
-          if (toCheck.nonEmpty) numberOfAllSolutionsForFirstChessman(freeFields.tail, chessmen, alreadySetChessmen,
-            result +numberOfSinglePermutationSolution(toCheck, chessmen.tail, setChessman :: alreadySetChessmen))
+          if (toCheck.nonEmpty) numberOfSinglePermutationSolution1(freeFields.tail, chessmen, alreadySetChessmen) +
+            numberOfSinglePermutationSolution1(toCheck, chessmen.tail, setChessman :: alreadySetChessmen)
           else
-            numberOfAllSolutionsForFirstChessman(freeFields.tail, chessmen, alreadySetChessmen, result)
+            numberOfSinglePermutationSolution1(freeFields.tail, chessmen, alreadySetChessmen)
         }
         else
-          numberOfAllSolutionsForFirstChessman(freeFields.tail, chessmen, alreadySetChessmen, result)
+          numberOfSinglePermutationSolution1(freeFields.tail, chessmen, alreadySetChessmen)
     }
   }
 
