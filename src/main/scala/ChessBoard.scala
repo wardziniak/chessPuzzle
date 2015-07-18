@@ -26,12 +26,12 @@ case class Field(x: Int, y: Int) {
     else x == field.x && y > field.y
   }
 
-  def isBeatenByOneOfChessmen(chessmen: List[Chessman]) = chessmen.find(p => p.beats(this)) match {
+  def isBeatenByOneOfChessPieces(chessmen: List[Chessman]) = chessmen.find(p => p.beats(this)) match {
     case None => false
     case Some(_) => true
   }
 
-  def beatsChessmen(beatFunction: (Field, Field) => Boolean, chessmen: List[Chessman]): Boolean =
+  def beatsChessPieces(beatFunction: (Field, Field) => Boolean, chessmen: List[Chessman]): Boolean =
     chessmen.find(p => beatFunction(this, p.field)) match {
       case None => false
       case _ => true

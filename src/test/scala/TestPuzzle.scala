@@ -5,7 +5,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
 /**
- * Created by bartek on 7/16/15.
+ * Created by wardziniak on 7/16/15.
+ * Sample test for algorithm
  */
 class TestPuzzle extends FlatSpec {
 
@@ -102,7 +103,7 @@ class TestPuzzle extends FlatSpec {
 
     val listOfFutures = chessmen.permutations.collect { case p =>
       Future {
-        Algorithm.singlePermutationSolutionTailRec(List((chessBoard, p.flatten, List())), List()).size
+        Algorithm.singlePermutationSolutionsTailRec(List((chessBoard, p.flatten, List())), List()).size
       }
     }
     val futureOfList = Future.sequence(listOfFutures)
@@ -120,7 +121,7 @@ class TestPuzzle extends FlatSpec {
 
     val listOfFutures = chessmen.permutations.collect { case p =>
       Future {
-        Algorithm.singlePermutationNumberOfSolutionTailRec(List((chessBoard, p.flatten, List())), 0)
+        Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
       }
     }
     val futureOfList = Future.sequence(listOfFutures)
@@ -136,7 +137,7 @@ class TestPuzzle extends FlatSpec {
 
       val listOfFutures = chessmen.permutations.collect { case p =>
         Future {
-          Algorithm.singlePermutationNumberOfSolutionTailRec(List((chessBoard, p.flatten, List())), 0)
+          Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
         }
       }
       val futureOfList = Future.sequence(listOfFutures)
@@ -152,7 +153,7 @@ class TestPuzzle extends FlatSpec {
 
       val listOfFutures = chessmen.permutations.collect { case p =>
         Future {
-          Algorithm.singlePermutationNumberOfSolutionTailRec(List((chessBoard, p.flatten, List())), 0)
+          Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
         }
       }
       val futureOfList = Future.sequence(listOfFutures)
@@ -171,7 +172,7 @@ class TestPuzzle extends FlatSpec {
 
       val listOfFutures = chessmen.permutations.collect { case p =>
         Future {
-          Algorithm.singlePermutationNumberOfSolutionTailRec(List((chessBoard, p.flatten, List())), 0)
+          Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
         }
       }
       val futureOfList = Future.sequence(listOfFutures)

@@ -5,7 +5,7 @@
 
 case class Chessman (field: Field, checkingFun: (Field, Field) => Boolean) {
   def beats(other: Field) = checkingFun(field, other)
-  def beatsChessmen(chessmen: List[Chessman]) = chessmen.find(p => this.beats(p.field)) match {
+  def beatsChessPieces(chessmen: List[Chessman]) = chessmen.find(p => this.beats(p.field)) match {
     case None => false
     case _ => true
   }

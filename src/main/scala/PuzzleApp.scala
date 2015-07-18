@@ -49,7 +49,7 @@ object PuzzleApp {
 
     val listOfFutures = chessmen.permutations.collect { case p =>
       Future {
-        Algorithm.singlePermutationNumberOfSolutionTailRec(List((chessBoard, p.flatten, List())), 0)
+        Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
       }
     }
     val futureOfList = Future.sequence(listOfFutures)
