@@ -19,10 +19,10 @@ object PuzzleApp {
     //val chessmens = List(king, king, rook)
     //val chessmens = List(rook, rook, knigh, knigh, knigh, knigh)
     //val chessmens = List(rook, rook, rook)
-    val chessmen = List(king, king, queen, queen, bishop, bishop, knight)
+//    val chessmen = List(king, king, queen, queen, bishop, bishop, knight)
     //val chessmen = List(queen)
 
-    val chessBoard = ChessBoard.createChessBoard(7)
+//    val chessBoard = ChessBoard.createChessBoard(7)
 
     val s = System.currentTimeMillis
 
@@ -38,8 +38,19 @@ object PuzzleApp {
 //    val futureOfList = Future.sequence(listOfFutures)
 //    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
-    val listOfFutures = chessmen.permutations.collect{ case p =>
-      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
+//    val listOfFutures = chessmen.permutations.collect{ case p =>
+//      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
+//    }
+//    val futureOfList = Future.sequence(listOfFutures)
+//    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
+
+    val chessmen = List(king, king, queen, queen, bishop, bishop, knight)
+    val chessBoard = ChessBoard.createChessBoard(7)
+
+    val listOfFutures = chessmen.permutations.collect { case p =>
+      Future {
+        Algorithm.singlePermutationNumberOfSolutionTailRec(List((chessBoard, p.flatten, List())), 0)
+      }
     }
     val futureOfList = Future.sequence(listOfFutures)
     val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
