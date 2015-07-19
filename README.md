@@ -1,5 +1,5 @@
 # chessPuzzle
 
 
-App sovles more general of Eight queens puzzle.
-Instead Queens other chessmen might be used, ex. King, Knight, Bishop or Rook
+App sovles problem of placing chess pieces on chessboard - more general version of the eight queen problem (https://en.wikipedia.org/wiki/Eight_queens_puzzle).
+Instead Queens other chess pieces might be used, ex. King, Knight, Bishop or Rook.
