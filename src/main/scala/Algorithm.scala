@@ -79,13 +79,13 @@ object Algorithm {
   }
 
   @tailrec
-  def singlePermutationNumberOfSolutionsTailRec(listOfCases: List[(List[Field], List[UnsetChessman], List[Chessman])], numberOfAlreadyFoundSolutions: Int): Int = listOfCases match {
+  def singlePermutationNumberOfSolutionsTailRec(listOfCases: List[SingleCase], numberOfAlreadyFoundSolutions: Int): Int = listOfCases match {
     case Nil =>
       numberOfAlreadyFoundSolutions
     case head :: tail =>
-      val freeFields = head._1
-      val chessPiecesToSet = head._2
-      val alreadySetChessPieces = head._3
+      val freeFields = head.freeFields
+      val chessPiecesToSet = head.chessPiecesToSet
+      val alreadySetChessPieces = head.alreadySetChessPieces
       (freeFields, chessPiecesToSet) match {
         case (_, Nil) =>
           singlePermutationNumberOfSolutionsTailRec(tail, numberOfAlreadyFoundSolutions)
@@ -98,19 +98,19 @@ object Algorithm {
           val chessManToSet = chessPiecesToSet.head
           val fieldWhenChessmanCanBeSet = freeFields.filterNot(p => p.beatsChessPieces(chessManToSet.checkingFunction, alreadySetChessPieces))
           val newCasesToCheck = fieldWhenChessmanCanBeSet.
-            map(p => (freeFields.filter(q => q.isAfter(p) && !chessManToSet.setOnField(p).beats(q)),chessPiecesToSet.tail, chessManToSet.setOnField(p) :: alreadySetChessPieces))
+            map(p => SingleCase(freeFields.filter(q => q.isAfter(p) && !chessManToSet.setOnField(p).beats(q)),chessPiecesToSet.tail, chessManToSet.setOnField(p) :: alreadySetChessPieces))
           singlePermutationNumberOfSolutionsTailRec(newCasesToCheck ++ tail, numberOfAlreadyFoundSolutions)
       }
   }
 
   @tailrec
-  def singlePermutationSolutionsTailRec(listOfCases: List[(List[Field], List[UnsetChessman], List[Chessman])], alreadyFoundSolutions: List[List[Chessman]]): List[List[Chessman]] = listOfCases match {
+  def singlePermutationSolutionsTailRec(listOfCases: List[SingleCase], alreadyFoundSolutions: List[List[Chessman]]): List[List[Chessman]] = listOfCases match {
     case Nil =>
       alreadyFoundSolutions
     case head :: tail =>
-      val freeFields = head._1
-      val chessPiecesToSet = head._2
-      val alreadySetChessPieces = head._3
+      val freeFields = head.freeFields
+      val chessPiecesToSet = head.chessPiecesToSet
+      val alreadySetChessPieces = head.alreadySetChessPieces
       (freeFields, chessPiecesToSet) match {
         case (_, Nil) =>
           singlePermutationSolutionsTailRec(tail, alreadyFoundSolutions)
@@ -124,10 +124,10 @@ object Algorithm {
           val chessManToSet = chessPiecesToSet.head
           val fieldWhenChessmanCanBeSet = freeFields.filterNot(p => p.beatsChessPieces(chessManToSet.checkingFunction, alreadySetChessPieces))
           val newCasesToCheck = fieldWhenChessmanCanBeSet.
-            map(p => (freeFields.filter(q => q.isAfter(p) && !chessManToSet.setOnField(p).beats(q)),chessPiecesToSet.tail, chessManToSet.setOnField(p) :: alreadySetChessPieces))
+            map(p => SingleCase(freeFields.filter(q => q.isAfter(p) && !chessManToSet.setOnField(p).beats(q)),chessPiecesToSet.tail, chessManToSet.setOnField(p) :: alreadySetChessPieces))
           singlePermutationSolutionsTailRec(newCasesToCheck ++ tail, alreadyFoundSolutions)
       }
   }
-
-
 }
+
+case class SingleCase(freeFields: List[Field], chessPiecesToSet: List[UnsetChessman], alreadySetChessPieces: List[Chessman])

@@ -13,49 +13,22 @@ object PuzzleApp {
     val queen = Chessman('q')
     val bishop = Chessman('b')
     val king = Chessman('k')
-    val rook = Chessman('r')
     val knight = Chessman('s')
-    //val chessmen = List(queen, queen, queen, queen, queen, queen, queen,queen)
-    //val chessmens = List(king, king, rook)
-    //val chessmens = List(rook, rook, knigh, knigh, knigh, knigh)
-    //val chessmens = List(rook, rook, rook)
-//    val chessmen = List(king, king, queen, queen, bishop, bishop, knight)
-    //val chessmen = List(queen)
-
-//    val chessBoard = ChessBoard.createChessBoard(7)
 
     val s = System.currentTimeMillis
-
-//    val listOfFutures = chessmen.permutations.collect{ case p =>
-//        Future {Algorithm.numberOfSinglePermutationSolution(chessBoard, p.flatten, List())}
-//    }
-//    val futureOfList = Future.sequence(listOfFutures)
-//    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
-
-//    val listOfFutures = chessmen.permutations.collect{ case p =>
-//      Future {Algorithm.numberOfSinglePermutationSolution1(chessBoard, p.flatten, List())}
-//    }
-//    val futureOfList = Future.sequence(listOfFutures)
-//    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
-
-//    val listOfFutures = chessmen.permutations.collect{ case p =>
-//      Future {Algorithm.returnSolutionsForSinglePermutation(chessBoard, p.flatten, List()).size}
-//    }
-//    val futureOfList = Future.sequence(listOfFutures)
-//    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
 
     val chessmen = List(king, king, queen, queen, bishop, bishop, knight)
     val chessBoard = ChessBoard.createChessBoard(7)
 
     val listOfFutures = chessmen.permutations.collect { case p =>
       Future {
-        Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
+        Algorithm.singlePermutationNumberOfSolutionsTailRec(List(SingleCase(chessBoard, p.flatten, List())), 0)
       }
     }
     val futureOfList = Future.sequence(listOfFutures)
-    val sum1 = Await.result(futureOfList, 30000.milliseconds).sum
+    val sum = Await.result(futureOfList, 30000.milliseconds).sum
 
-    println(s"Number of solutions: $sum1")
+    println(s"Number of solutions: $sum")
     println(s"Execution time: ${System.currentTimeMillis - s}")
 
 

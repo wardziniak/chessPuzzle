@@ -103,7 +103,7 @@ class TestPuzzle extends FlatSpec {
 
     val listOfFutures = chessmen.permutations.collect { case p =>
       Future {
-        Algorithm.singlePermutationSolutionsTailRec(List((chessBoard, p.flatten, List())), List()).size
+        Algorithm.singlePermutationSolutionsTailRec(List(SingleCase(chessBoard, p.flatten, List())), List()).size
       }
     }
     val futureOfList = Future.sequence(listOfFutures)
@@ -121,7 +121,7 @@ class TestPuzzle extends FlatSpec {
 
     val listOfFutures = chessmen.permutations.collect { case p =>
       Future {
-        Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
+        Algorithm.singlePermutationNumberOfSolutionsTailRec(List(SingleCase(chessBoard, p.flatten, List())), 0)
       }
     }
     val futureOfList = Future.sequence(listOfFutures)
@@ -137,7 +137,7 @@ class TestPuzzle extends FlatSpec {
 
       val listOfFutures = chessmen.permutations.collect { case p =>
         Future {
-          Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
+          Algorithm.singlePermutationNumberOfSolutionsTailRec(List(SingleCase(chessBoard, p.flatten, List())), 0)
         }
       }
       val futureOfList = Future.sequence(listOfFutures)
@@ -153,7 +153,7 @@ class TestPuzzle extends FlatSpec {
 
       val listOfFutures = chessmen.permutations.collect { case p =>
         Future {
-          Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
+          Algorithm.singlePermutationNumberOfSolutionsTailRec(List(SingleCase(chessBoard, p.flatten, List())), 0)
         }
       }
       val futureOfList = Future.sequence(listOfFutures)
@@ -172,7 +172,7 @@ class TestPuzzle extends FlatSpec {
 
       val listOfFutures = chessmen.permutations.collect { case p =>
         Future {
-          Algorithm.singlePermutationNumberOfSolutionsTailRec(List((chessBoard, p.flatten, List())), 0)
+          Algorithm.singlePermutationNumberOfSolutionsTailRec(List(SingleCase(chessBoard, p.flatten, List())), 0)
         }
       }
       val futureOfList = Future.sequence(listOfFutures)
